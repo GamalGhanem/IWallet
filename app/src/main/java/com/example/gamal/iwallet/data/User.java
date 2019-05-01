@@ -46,7 +46,7 @@ public class User {
         return (this.email.equals(email) && this.password.equals(pass));
     }
     /*
-    update Categorize paid by increase amount if not release the limit 
+    update Categorize paid by decrease amount if not release the limit 
     else return false.
     */
     public boolean updateCatergorizePaid(String name, double amount){
@@ -58,8 +58,13 @@ public class User {
     	
     }
     
+    public void addCategorize(Categorize c){
+    	this.userCategorizeHub.addCategorize(c);
+        this.budget -= c.getPaid();
+    }
+    
     /*
-    update Bill paid by increase amount i
+    update Bill paid by decrease amount 
     */
     public void updateBillPaid(String name, double amount){
     	 this.userBillsController.updateBillPaid(name, amount);
@@ -72,5 +77,29 @@ public class User {
     	this.userBillsController.addBill(b);
         this.budget -= b.getValue();
     }
+    
+    
+    /*
+    update Income paid by increase amount 
+    */
+    public void updateIncomeValue(String name, double amount){
+    	 this.userIncomesController.updateIncomeValue(name, amount);
+    	 this.budget += amount;
+    	
+    }
+    
+    
+    public void addIncome(Income i){
+    	this.userIncomesController.addIncome(i);
+        this.budget += i.getValue();
+    }
+    
+    public void updateFixedIncome() {
+    	this.budget += this.userIncomesController.updateFixedIncome();
+    }
+    
+    
+    
+   
  
 }
